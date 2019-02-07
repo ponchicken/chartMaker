@@ -15,6 +15,7 @@ BODY {
     {
       "x": "{UNIX TIMESTAMP}",
       "y": "{NUMBER}"
+    }, ...
   ]
 }
 ```
