@@ -16,6 +16,7 @@ export const chart = ({
   width: _width = 1280,
   height: _height = 720,
 }) => {
+  data = data.sort((a, b) => a.x - b.x)
   const values = data.map(item => item.y)
   const times = data.map(item => item.x)
 
@@ -80,7 +81,7 @@ export const chart = ({
     .attr('d', chartLineGenerator(coords))
     .attr('stroke', colors.main)
     .attr('stroke-width', 2)
-    .attr('fill', 'none')
+    .attr('fill', 'rgba(255,255,255,.1)')
 
   // chart dot circles
   svg
