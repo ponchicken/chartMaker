@@ -81,7 +81,7 @@ export const chart = ({
     .attr('d', chartLineGenerator(coords))
     .attr('stroke', colors.main)
     .attr('stroke-width', 2)
-    .attr('fill', 'rgba(255,255,255,.1)')
+    .attr('fill', 'rgba(0,0,0,.2)')
 
   // chart dot circles
   svg
