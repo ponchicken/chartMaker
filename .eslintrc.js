@@ -1,0 +1,5 @@
+{
+  extends: [
+    "@elamajs/elama"
+  ]
+}
