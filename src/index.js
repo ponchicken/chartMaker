@@ -10,12 +10,12 @@ const port = process.env.CHARTMAKER_PORT || 3300
 app.use(express.json())
 
 app.get('/', (req, res) => {
-  res.send('Hello')
+  res.send('Hello!!')
 })
 
 app.post('/', async (req, res) => {
   try {
-    const data = JSON.parse(req.body.data)
+    const data = req.body.data
     const png = await convert(chart({ data }), {
       background: 'rgba(0,0,0,.85)'
     })
