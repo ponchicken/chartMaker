@@ -1,11 +1,12 @@
 # chartMaker
 server which generates chart image
 
-`npm i`
+`./build/run.sh`
 
-`npm start`
+# запуск dev
+`npm i & npm start`
 
-Запусткается на порте из env CHARTMAKER_PORT либо на 3300
+Запускается на порте из env CHARTMAKER_PORT либо на 3300
 
 ```
 REQUEST:
