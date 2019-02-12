@@ -1,9 +1,6 @@
 import 'dotenv/config'
-import fs from 'fs'
 import express from 'express'
-import request from 'request'
-// import sharp from 'sharp'
-const fetch = require('node-fetch')
+import fetch from 'node-fetch'
 
 import { chart } from './chart'
 
@@ -20,28 +17,19 @@ app.get('/', async (req, res) => {
 app.post('/', async (req, res) => {
   try {
     const data = req.body.data
-    // curl -X POST -d '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100"></svg>' http://localhost:8999/convert?background=black > svg.png
     const svg = chart({ data })
-    // request({
-    //   url: 'http://convert:3000/convert?background=black',
-    //   method: 'POST',
-    //   body: '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100"></svg>',
-    //   json: false
-    // }, (error, resp, body) => {
-    //   console.log({error, resp, body})
-    //   res.set('Content-Type', 'image/png')
-    //   res.send(JSON.stringify(resp))
-    // })
+
     fetch('http://convert:3000/convert?background=black', {
-      method: 'POST'
+        method: 'POST',
+        body: svg,
     })
-      .then(res => {
-        console.log(res)
+      .then(res => res.arrayBuffer())
+      .then(d => {
         res.set('Content-Type', 'image/png')
-        res.send(svg)
+        res.send(new Buffer.from(d))
       })
   } catch (err) {
-    console.warn(err)
+    console.warn('ERROR', err)
     res.send(err.message)
   }
 })

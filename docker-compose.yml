@@ -1,11 +1,6 @@
 version: '3'
 
 services:
-  convert:
-    image: pluswerk/convert-svg-to-png
-    container_name: convert
-    ports:
-      - 8999:3000
   app:
     build:
       context: .
@@ -14,9 +9,14 @@ services:
     container_name: "dev"
     volumes:
       - "./:/usr/src/app"
-      - /usr/src/app/node_modules
     ports:
       - "3300:3300"
     depends_on:
       - convert
-    command: npm start
+    command: nodemon --exec babel-node ./src/index.js
+
+  convert:
+    image: pluswerk/convert-svg-to-png
+    container_name: convert
+    ports:
+      - 8999:3000
