@@ -1,7 +1,12 @@
 version: '3'
 
 services:
-  dev:
+  convert:
+    image: pluswerk/convert-svg-to-png
+    container_name: convert
+    ports:
+      - 8999:3000
+  app:
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -12,4 +17,6 @@ services:
       - /usr/src/app/node_modules
     ports:
       - "3300:3300"
+    depends_on:
+      - convert
     command: npm start

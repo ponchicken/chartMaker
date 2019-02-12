@@ -1,9 +1,9 @@
 import 'dotenv/config'
 import fs from 'fs'
 import express from 'express'
+import request from 'request'
 // import sharp from 'sharp'
-import { convert } from 'convert-svg-to-png'
-import puppeteer from 'puppeteer'
+const fetch = require('node-fetch')
 
 import { chart } from './chart'
 
@@ -12,12 +12,6 @@ const port = process.env.CHARTMAKER_PORT || 3300
 
 app.use(express.json())
 
-const extraFlags = [
-  '--no-sandbox',
-  '--disable-web-security',
-]
-
-puppeteer.launch({ args: extraFlags })
 
 app.get('/', async (req, res) => {
   res.send('hello')
@@ -26,14 +20,26 @@ app.get('/', async (req, res) => {
 app.post('/', async (req, res) => {
   try {
     const data = req.body.data
-    // const png = await sharp(
-    //   new Buffer.from(chart({ data }))
-    // ).webp().toBuffer()
-    const png = await convert(chart({ data }), {
-      background: 'rgba(0,0,0,.85)'
+    // curl -X POST -d '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100"></svg>' http://localhost:8999/convert?background=black > svg.png
+    const svg = chart({ data })
+    // request({
+    //   url: 'http://convert:3000/convert?background=black',
+    //   method: 'POST',
+    //   body: '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100"></svg>',
+    //   json: false
+    // }, (error, resp, body) => {
+    //   console.log({error, resp, body})
+    //   res.set('Content-Type', 'image/png')
+    //   res.send(JSON.stringify(resp))
+    // })
+    fetch('http://convert:3000/convert?background=black', {
+      method: 'POST'
     })
-    res.set('Content-Type', 'image/webp')
-    res.send(png)
+      .then(res => {
+        console.log(res)
+        res.set('Content-Type', 'image/png')
+        res.send(svg)
+      })
   } catch (err) {
     console.warn(err)
     res.send(err.message)

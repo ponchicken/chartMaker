@@ -7,6 +7,7 @@ RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable 
 RUN apt-get update && apt-get install -y google-chrome-stable
 
 COPY package*.json ./
+RUN npm install nodemon
 RUN npm install
 
 COPY . .
