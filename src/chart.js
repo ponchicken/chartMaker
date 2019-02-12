@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import jsdom from 'jsdom'
 import moment from 'moment'
-import styles from './styles'
+import styles, { style } from './styles'
 moment.locale('ru')
 
 const { JSDOM } = jsdom

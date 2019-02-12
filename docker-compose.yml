@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    working_dir: /usr/src/app
+    container_name: "dev"
+    volumes:
+      - "./:/usr/src/app"
+      - /usr/src/app/node_modules
+    ports:
+      - "3300:3300"
+    command: npm start
